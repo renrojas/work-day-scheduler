@@ -17,9 +17,29 @@ $(document).ready(function () {
   // useful when saving the description in local storage?
  
 function updater () {
-  const hour = dayjs().hour()
-  $(".time-block").each(), 
+  const currentHour = dayjs().hour()
+  $(".time-block").each(function(){
+    const hour = parseInt($(this).attr("id").split('-')[1]);
+    if (hour < currentHour) {
+      $(this).addClass("past")
+    } else if (currentHour === hour){
+      $(this).removeClass("past"); 
+      $(this).addClass("present");
+     
+    } else {
+      $(this).removeClass("present");
+      $(this).removeClass("past");
+      $(this).addClass("future");
+
+    }
+  })
+
+
+
 }
+updater();
+
+$("#hour-9 .description").val(localStorage.getItem("hour-9"));
 
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
@@ -32,4 +52,6 @@ function updater () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
+$('#currentDay').text(dayjs().format('MMMM,DD,YYYY'));
+
 });
